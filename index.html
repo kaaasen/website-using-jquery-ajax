@@ -1,0 +1,161 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My custom pokedex!</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+      var id = 1;
+      $(document).ready(function() {
+
+        // FIRST POKEMON
+        $("#first").click(function() {
+          id = 1;
+          $.getJSON('http://pokeapi.co/api/v2/pokemon/' + id, function(data, status) {
+            $("#character_name").text(data.name);
+            $("#image_id").attr('src', data.sprites.front_default);
+            $("#type").text("Main type: " + data.types[0].type.name);
+          });
+        });
+
+        // PREVIOUS POKEMON
+        $("#previous").click(function() {
+          if (id < 1) {
+            id = 807;
+            $.getJSON('http://pokeapi.co/api/v2/pokemon/' + id, function(data, status) {
+              $("#character_name").text(data.name);
+              $("#image_id").attr('src', data.sprites.front_default);
+              $("#type").text("Main type: " + data.types[0].type.name);
+            });
+          } else {
+            id--;
+            $.getJSON('http://pokeapi.co/api/v2/pokemon/' + id, function(data, status) {
+              $("#character_name").text(data.name);
+              $("#image_id").attr('src', data.sprites.front_default);
+              $("#type").text("Main type: " + data.types[0].type.name);
+            });
+          }
+        });
+
+        // NEXT POKEMON
+        $("#next").click(function() {
+          id++;
+          $.getJSON('http://pokeapi.co/api/v2/pokemon/' + id, function(data, status) {
+            $("#character_name").text(data.name);
+            $("#image_id").attr('src', data.sprites.front_default);
+            $("#type").text("Main type: " + data.types[0].type.name);
+          });
+        });
+
+        // RANDOM POKEMON
+        $("#random").click(function() {
+          id = getRandomInt();
+          $.getJSON('http://pokeapi.co/api/v2/pokemon/' + id, function(data, status) {
+            $("#character_name").text(data.name);
+            $("#image_id").attr('src', data.sprites.front_default);
+            $("#type").text("Main type: " + data.types[0].type.name);
+              $.getJSON('http://pokeapi.co/api/v2/pokemon-species/' + id, function(data, status) {
+                $("#description").text("Description: " + data.flavor_text_entries[2].flavor_text);
+              });
+            });
+          });
+        });
+    </script>
+    <script>
+      function getRandomInt(max) {
+        return Math.floor(Math.random() * 807) + 1;
+      }
+    </script>
+
+    <style>
+      html {
+        text-align: center;
+        font-family: Georgia;
+        font-weight: bold;
+        text-transform: lowercase;
+      }
+
+      body {
+        background-image: url(https://wallpaper.wiki/wp-content/uploads/2017/04/wallpaper.wiki-All-Pokemon-Background-Full-HD-PIC-WPC005238.jpg);
+        width: 100%;
+        min-width: 100%;
+      }
+
+      h1 {
+        color: #2F8B47;
+        font-size: 500%;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: 700;
+        line-height: 150px;
+        text-shadow: 4px 4px 20px #8BE0F4;
+      }
+
+      p {
+        font-size: 30px;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: 400;
+      }
+
+      button {
+        border-radius: 20px;
+        background-color: #8BE0F4;
+        border-right: 4px solid #2F8B47;
+        color: #2F8B47;
+        text-align: center;
+        display: inline-block;
+        font-size: 26px;
+        padding-left: 25px;
+        padding-right: 25px;
+        text-shadow: 4px 4px 50px #222;
+      }
+
+      .display {
+        position: fixed;
+        left: 150px;
+        bottom: 100px
+      }
+
+      #character_name {
+        color: #2F8B47;
+        font-size: 200%;
+        text-shadow: 4px 4px 30px #222;
+      }
+
+      img {
+        -webkit-filter: drop-shadow(5px 5px 25px #222);
+        filter: drop-shadow(5px 5px 25px #222);
+      }
+
+      #type {
+        color: #2F8B47;
+        font-size: 125%;
+        text-shadow: 4px 4px 30px #222;
+      }
+
+      #description {
+        font-size: 90%;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>My custom pokedex!</h1>
+    </header>
+    <button id="previous">previous</button>
+    <button id="first">first</button>
+    <button id="random">random</button>
+    <button id="next">next</button>
+    <br>
+    <p id="description"></p>
+    <div class="display">
+    <p id="character_name"></p>
+    <p id="type"></p>
+    <img id="image_id" alt="HTML5" width="250vh"></img>
+    </div>
+  </body>
+<html>
